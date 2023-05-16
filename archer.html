@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Score Entry</h1>
+  <form id="archer_form" action="enter_range.php" method="post">
+  <div class="wrapper">
+    <select name="round" id="round">
+      <option value="RoundA" selected>Round A</option>
+      <option value="RoundB">Round B</option>
+      <option value="RoundC">Round C</option>
+      <option value="RoundD">Round D</option>
+ 
+  </select>
+</div>
+  <div class="wrapper">
+    <label for="name"><p>Archer</p></label>
+    <input id="archer" type="text" name="archer"
+         required>    
+    </div>
+    <div class="wrapper">
+      <label for=""><p>Equipment</p></label>
+      <input id="equipment" type="text" name="equipment"
+           required>    
+      </div>
+  
+      <button type="submit">Submit</button>
+
+  </form>
+
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+.wrapper
+{
+    margin: 10px;
+}
+
+#scoreForm
+{
+   display: inline;
+}
+
+.score_input 
+{
+    width: 30px;
+}
