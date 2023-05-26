@@ -1,12 +1,13 @@
 <?php
-    $host = "feenix-mariadb.swin.edu.au";
-	$user = "s104001913";
-	$pwd = "";
-	$sql_db = "s104001913_db";
+
+            session_start();        // starts session for user
 
     function db()
     {
-        session_start();        // starts session for user
+        $host = "feenix-mariadb.swin.edu.au";
+	    $user = "s104001913";
+	    $pwd = 
+	    $sql_db = "s104001913_db";
 
         $conn = @mysqli_connect($host, $user, $pwd, $sql_db);
         if (!$conn) 
@@ -20,7 +21,7 @@
         }
     }
 
-    function competition(name, round_num, gender, date, ageGroup, championship)
+    function competition($name, $round_num, $gender, $date, $ageGroup, $championship)
     {
         $conn = db();
 
@@ -30,7 +31,151 @@
         exit();
     }
 
-    function competitiors(firstName, lastName, gender, age)
+    function retrieveComp()
+    {
+        $conn = db();
+
+        $query = "SELECT competition_id, name FROM competition;";
+        $result = mysqli_query($conn, $query);
+
+        $output = array();
+
+        if($result)
+        {
+            while($data = mysqli_fetch_array($result))
+            {
+                array_push($output, array($data['competition_id'], $data['name']));
+            }
+
+            return $output;
+        }
+       else
+       {
+        echo "Error";
+       }
+    }
+
+     function retrieveArchers()
+    {
+        $conn = db();
+
+        $query = "SELECT player_id, firstName, lastName, gender FROM competitors;";
+        $result = mysqli_query($conn, $query);
+
+         $output = array();
+
+        if($result)
+        {
+            while($data = mysqli_fetch_array($result))
+            {
+                array_push($output, array($data['player_id'], $data['firstName'], $data['lastName'], $data['gender']));
+            }
+
+            return $output;
+        }
+       else
+       {
+        echo "Error";
+       }
+    }
+
+    function retrieveRound()
+    {
+        $conn = db();
+
+       /* $query = "SELECT competition_id FROM competitions WHERE name = '$compName';";
+        $result = mysqli_query($conn, $query); */
+
+        $query = "SELECT round_id FROM round";
+        $result =  mysqli_query($conn, $query);
+
+         $output = array();
+
+        if($result)
+        {
+            while($data = mysqli_fetch_array($result))
+            {
+                array_push($output, $data['round_id']);
+            }
+
+            return $output;
+        }
+       else
+       {
+        echo "Error";
+       }
+    }
+
+    function retrieveRange()
+    {
+        $conn = db();
+
+        $query = "SELECT range_id FROM `range`;";
+        $result = mysqli_query($conn, $query);
+
+        $output = array();
+
+        if($result)
+        {
+            while($data = mysqli_fetch_array($result))
+            {
+                array_push($output, $data['range_id']);
+            }
+            return $output;
+        }
+       else
+       {
+        echo "Error";
+       }
+    }
+
+    function retrieveEnd()
+    {
+        $conn = db();
+
+        $query = "SELECT range_id FROM `range`;";
+        $result = mysqli_query($conn, $query);
+
+        $output = array();
+
+        if($result)
+        {
+            while($data = mysqli_fetch_array($result))
+            {
+                array_push($output, $data['range_id']);
+            }
+            return $output;
+        }
+       else
+       {
+        echo "Error";
+       }
+    }
+
+    function retrieveShot()
+    {
+        $conn = db();
+
+        $query = "SELECT shotid FROM `shot`;";
+        $result = mysqli_query($conn, $query);
+
+        $output = array();
+
+        if($result)
+        {
+            while($data = mysqli_fetch_array($result))
+            {
+                array_push($output, $data['shotid']);
+            }
+            return $output;
+        }
+       else
+       {
+        echo "Error";
+       }
+    }
+
+    function competitiors($firstName, $lastName, $gender, $age)
     {
         $conn = db();
 
@@ -40,7 +185,7 @@
         exit();
     }
 
-    function round(rangeNum, equipment, score)
+    function roundInsert($rangeNum, $equipment, $score)
     {
         $conn = db();
 
@@ -50,17 +195,17 @@
         exit();
     }
 
-     function pRound(playerID, roundID)
+     function pRound($playerID, $roundID)
     {
         $conn = db();
 
-        $query = "INSERT INTO playerRound (player_id, round_id) VALUES ('$playerID', '$roundID');"
+        $query = "INSERT INTO playerRound (player_id, round_id) VALUES ('$playerID', '$roundID');";
         $result = mysqli_query($conn, $query);
 
         exit();
     }
 
-    function range(distance, targetFace, score)
+    function rangeInsert($distance, $targetFace, $score)
     {
         $conn = db();
 
@@ -70,47 +215,42 @@
         exit();
     }
 
-    function pRange(playerID, rangeID)
+    function pRange($playerID, $rangeID)
     {
         $conn = db();
 
         $query = "INSERT INTO playerRange (player_id, range_id) VALUES ('$playerID', '$rangeID');";
         $result = mysqli_query($conn, $query);
-
-        exit();
     }
 
-    function end(shotID, score)
+    function endInsert($shotID, $score)
     {
         $conn = db();
 
-        $query = "INSERT INTO `end` (`end_id`, `shotId`, `score`) VALUES ('$shotID', '$score');";
+        $query = "INSERT INTO `end` (`shotId`, `score`) VALUES ('$shotID', '$score');";
         $result = mysqli_query($conn, $query);
-
-        exit();
     }
 
-    function pEnd(playerID, $endID)
+    function pEnd($playerID, $endID)
     {
         $conn = db();
 
         $query = "INSERT INTO `playerEnd` (`player_id`, `end_id`) VALUES ('$playerID', '$endID');";
         $result = mysqli_query($conn, $query);
-
-        exit();
     }
 
-    function shot(score)
+    function shotInsert($score)
     {
         $conn = db();
 
         $query = "INSERT INTO `shot` (`score`) VALUES ('$score');";
         $result = mysqli_query($conn, $query);
 
-        exit();
+        $shots = retrieveShot();
+        return $shots[count($shots)-1];
     }
 
-    function compResults(compID, roundID, rangeID, endID)
+    function compResults($compID, $roundID, $rangeID, $endID)
     {
         $conn = db();
 

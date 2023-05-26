@@ -4,10 +4,10 @@ function generateDropdown()
     var container = document.getElementById("dropdownContainer");
     container.innerHTML = "";
     var number = 0;
-    for (var i = 1; i <= numDropdowns; i++) {
+    //for (var i = 1; i <= numDropdowns; i++) {
         console.log(numDropdowns);
         var end = document.createElement("p")
-        end.innerHTML = "End " + (i); 
+        end.innerHTML = "End " + (numDropdowns); 
         container.appendChild(end);
         for (var k = 1; k <= 5; k++) {
             var dropdown = document.createElement("select");
@@ -22,12 +22,12 @@ function generateDropdown()
                 option.text = scoreOptions[j];
                 dropdown.appendChild(option);
             }
-            console.log(i);
+            //console.log(i);
             container.appendChild(dropdown);
             container.appendChild(document.createElement("br"));
 
         }
-    }
+  //  }
 
     var button = document.getElementById("doneButton");
     button.type = "hidden";
